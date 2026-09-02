@@ -5276,3 +5276,445 @@ html, body {
     padding-bottom: 52px;
   }
 }
+
+/* ================================================================
+   SAWA UNITED — HOMEPAGE RESPONSIVE REBUILD
+   This block intentionally comes last and overrides the older stacked
+   hero rules. The homepage is treated as 3 independent layers:
+   header / copy / registration card. They never share a grid row.
+   ================================================================ */
+
+/* Base: predictable viewport + no accidental horizontal canvas. */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.reference-hero {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 620px;
+  max-height: none;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.reference-hero .hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center center;
+  transform: none !important;
+}
+
+/* The source image is intentionally darkened only enough for readable UI. */
+.reference-hero .hero-overlay {
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(5,20,31,.30) 0%, rgba(5,20,31,.04) 42%, rgba(5,20,31,.42) 100%),
+    linear-gradient(90deg, rgba(5,20,31,.28) 0%, rgba(5,20,31,0) 58%, rgba(5,20,31,.18) 100%);
+  pointer-events: none;
+}
+
+/* Desktop: copy on the right, card on the left, with a large safe gap. */
+.reference-hero .reference-copy {
+  position: absolute !important;
+  z-index: 8;
+  top: 18%;
+  right: 8%;
+  left: auto;
+  width: min(480px, 38vw);
+  max-width: 480px;
+  margin: 0 !important;
+  transform: none !important;
+  text-align: right;
+  direction: rtl;
+  pointer-events: none;
+}
+
+.reference-hero .reference-copy h1 {
+  margin: 0;
+  font-family: "IBM Plex Sans Arabic", Cairo, sans-serif;
+  font-size: clamp(42px, 5.2vw, 76px);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -.045em;
+  color: #fff;
+  text-align: right;
+  text-shadow: 0 4px 24px rgba(0,0,0,.30);
+}
+
+.reference-hero .reference-copy p {
+  margin: 18px 0 0;
+  max-width: 430px;
+  font-family: "IBM Plex Sans Arabic", Cairo, sans-serif;
+  font-size: clamp(14px, 1.25vw, 19px);
+  line-height: 1.8;
+  font-weight: 400;
+  color: rgba(255,255,255,.92);
+  text-align: right;
+  text-shadow: 0 2px 14px rgba(0,0,0,.25);
+}
+
+.reference-hero .accent-line {
+  display: inline-block;
+  padding-right: 13px;
+  border-right: 3px solid #d9b861;
+}
+
+.reference-hero .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 24px;
+  pointer-events: auto;
+}
+
+.reference-hero .hero-primary-cta,
+.reference-hero .hero-secondary-cta {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.reference-hero .hero-primary-cta {
+  background: #e2bd63;
+  color: #16304a;
+  font-weight: 700;
+}
+
+.reference-hero .hero-secondary-cta {
+  background: rgba(255,255,255,.30);
+  border: 1px solid rgba(255,255,255,.24);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Registration card is always independent of the copy. */
+.reference-hero .hero-interest-card {
+  position: absolute !important;
+  z-index: 12;
+  top: auto !important;
+  right: auto !important;
+  left: 7%;
+  bottom: 7%;
+  width: min(360px, 31vw);
+  min-width: 0;
+  max-height: calc(100% - 150px);
+  overflow: auto;
+  padding: 22px 20px 18px;
+  margin: 0 !important;
+  box-sizing: border-box;
+  border-radius: 22px;
+  transform: none !important;
+  translate: none !important;
+  background: linear-gradient(145deg, rgba(31,59,69,.70), rgba(12,31,40,.64));
+  border: 1px solid rgba(255,255,255,.30);
+  box-shadow: 0 24px 65px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.16);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  animation: none !important;
+}
+
+.reference-hero .hero-interest-card .interest-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reference-hero .hero-interest-card h2 {
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.reference-hero .hero-interest-card .interest-head p {
+  margin: 3px 0 0;
+  font-size: 11px;
+  color: rgba(255,255,255,.72);
+}
+
+.reference-hero .hero-interest-card .interest-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.reference-hero .hero-interest-card .interest-form input,
+.reference-hero .hero-interest-card .interest-form select,
+.reference-hero .hero-interest-card .phone-group,
+.reference-hero .hero-interest-card .phone-field {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.reference-hero .hero-interest-card .interest-form input,
+.reference-hero .hero-interest-card .interest-form select,
+.reference-hero .hero-interest-card .phone-field {
+  height: 42px;
+  border-radius: 11px;
+}
+
+.reference-hero .hero-interest-card .interest-form input,
+.reference-hero .hero-interest-card .interest-form select {
+  padding-inline: 12px;
+  font-size: 12px;
+}
+
+.reference-hero .hero-interest-card .interest-form button {
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  margin: 1px 0 0;
+  border-radius: 11px;
+  font-size: 14px;
+}
+
+/* Tablet: retain the two-zone composition, but shrink everything safely. */
+@media (min-width: 641px) and (max-width: 1100px) {
+  .reference-hero .reference-copy {
+    top: 15%;
+    right: 5%;
+    width: min(390px, 48vw);
+  }
+
+  .reference-hero .reference-copy h1 {
+    font-size: clamp(34px, 5.5vw, 52px);
+  }
+
+  .reference-hero .reference-copy p {
+    font-size: 13px;
+    max-width: 330px;
+  }
+
+  .reference-hero .hero-interest-card {
+    left: 5%;
+    bottom: 5%;
+    width: min(340px, 40vw);
+    padding: 19px 17px 16px;
+  }
+
+  .reference-hero .hero-interest-card .interest-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .reference-hero .hero-interest-card .interest-form > input:first-child,
+  .reference-hero .hero-interest-card .interest-form select,
+  .reference-hero .hero-interest-card .interest-form button {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Phones: make a genuine vertical layout. Copy occupies the top zone;
+   card occupies the bottom zone. No negative offsets, no transforms,
+   and no desktop-sized elements survive here. */
+@media (max-width: 640px) {
+  .reference-hero {
+    height: 100svh;
+    min-height: 600px;
+  }
+
+  .reference-hero .hero-bg {
+    object-position: 67% center;
+  }
+
+  .reference-hero .hero-overlay {
+    background:
+      linear-gradient(180deg, rgba(5,20,31,.48) 0%, rgba(5,20,31,.08) 34%, rgba(5,20,31,.12) 55%, rgba(5,20,31,.64) 100%),
+      linear-gradient(90deg, rgba(5,20,31,.20), rgba(5,20,31,0) 72%);
+  }
+
+  .reference-hero .reference-copy {
+    top: 92px;
+    right: 18px;
+    left: 18px;
+    width: auto;
+    max-width: none;
+    z-index: 8;
+  }
+
+  .reference-hero .reference-copy h1 {
+    max-width: 330px;
+    margin-left: auto;
+    font-size: clamp(31px, 10.5vw, 46px);
+    line-height: 1.08;
+  }
+
+  .reference-hero .accent-line {
+    padding-right: 8px;
+    border-right-width: 2px;
+  }
+
+  .reference-hero .reference-copy p {
+    max-width: 270px;
+    margin-top: 10px;
+    margin-left: auto;
+    font-size: 11px;
+    line-height: 1.7;
+  }
+
+  .reference-hero .hero-actions {
+    display: none;
+  }
+
+  .reference-hero .hero-interest-card {
+    left: 14px;
+    right: 14px !important;
+    bottom: 14px;
+    top: auto !important;
+    width: auto;
+    max-height: none;
+    padding: 14px 13px 13px;
+    border-radius: 18px;
+  }
+
+  .reference-hero .hero-interest-card .interest-head {
+    gap: 9px;
+  }
+
+  .reference-hero .hero-interest-card .interest-icon {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+    border-radius: 11px;
+  }
+
+  .reference-hero .hero-interest-card h2 {
+    font-size: 16px;
+  }
+
+  .reference-hero .hero-interest-card .interest-head p {
+    font-size: 9px;
+  }
+
+  .reference-hero .hero-interest-card .mini-rule {
+    margin: 6px 0 8px;
+  }
+
+  .reference-hero .hero-interest-card .interest-form {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .reference-hero .hero-interest-card .interest-form > * {
+    grid-column: 1 / -1 !important;
+  }
+
+  .reference-hero .hero-interest-card .interest-form input,
+  .reference-hero .hero-interest-card .interest-form select,
+  .reference-hero .hero-interest-card .phone-field,
+  .reference-hero .hero-interest-card .phone-input {
+    height: 39px !important;
+    min-height: 39px;
+    border-radius: 10px;
+  }
+
+  .reference-hero .hero-interest-card .interest-form input,
+  .reference-hero .hero-interest-card .interest-form select {
+    font-size: 11px;
+  }
+
+  .reference-hero .hero-interest-card .interest-form button {
+    height: 43px;
+    min-height: 43px;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+
+  .reference-hero .scroll-cue,
+  .reference-hero .side-mark,
+  .reference-hero .hero-stats {
+    display: none !important;
+  }
+}
+
+/* Very small phones: reduce card density rather than allowing overlap. */
+@media (max-width: 390px) {
+  .reference-hero {
+    min-height: 570px;
+  }
+
+  .reference-hero .reference-copy {
+    top: 84px;
+    right: 15px;
+    left: 15px;
+  }
+
+  .reference-hero .reference-copy h1 {
+    font-size: 30px;
+  }
+
+  .reference-hero .reference-copy p {
+    max-width: 245px;
+    font-size: 10px;
+  }
+
+  .reference-hero .hero-interest-card {
+    left: 10px;
+    right: 10px !important;
+    bottom: 10px;
+    padding: 12px 11px 11px;
+  }
+
+  .reference-hero .hero-interest-card .interest-icon {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .reference-hero .hero-interest-card h2 {
+    font-size: 14px;
+  }
+
+  .reference-hero .hero-interest-card .interest-head p {
+    font-size: 8px;
+  }
+
+  .reference-hero .hero-interest-card .interest-form {
+    gap: 5px;
+    margin-top: 6px;
+  }
+
+  .reference-hero .hero-interest-card .interest-form input,
+  .reference-hero .hero-interest-card .interest-form select,
+  .reference-hero .hero-interest-card .phone-field,
+  .reference-hero .hero-interest-card .phone-input {
+    height: 36px !important;
+    min-height: 36px;
+  }
+
+  .reference-hero .hero-interest-card .interest-form button {
+    height: 40px;
+    min-height: 40px;
+  }
+}
+
+/* Accessibility: don't animate layout-bearing hero elements on reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .reference-hero .hero-bg,
+  .reference-hero .hero-interest-card,
+  .reference-hero .reference-copy {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    translate: none !important;
+  }
+}
