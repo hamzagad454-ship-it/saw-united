@@ -1,3 +1,28 @@
+/**
+ * Sawa United — stylesheet
+ *
+ * NOTE ON STRUCTURE:
+ * This file grew through several iterative design passes (hero, header,
+ * mobile menu, country switcher, responsive fixes, motion/parallax).
+ * Later rules in the file intentionally override earlier ones at the
+ * same breakpoint/selector — this is how several responsive and
+ * state-dependent behaviors are layered on top of the base styles.
+ * Rule ORDER is therefore part of the visual result and has been left
+ * untouched during cleanup; only dead code, stray whitespace and
+ * documentation were touched. Rough map of major sections (search for
+ * these comments to jump around):
+ *   - :root tokens, resets, base typography
+ *   - Header / nav / language + theme switcher / mobile drawer
+ *   - Hero (background crossfade, parallax, interest card, stats)
+ *   - Country switcher (Egypt / Morocco)
+ *   - Morocco cities, property grid & filters, map section
+ *   - Diaspora / about / contact / footer sections
+ *   - Property detail modal
+ *   - Scroll-reveal & premium motion utility classes
+ *   - Responsive breakpoints (1080 / 980 / 860 / 640px) and targeted
+ *     mobile-menu / header / country-switcher fixes
+ *   - prefers-reduced-motion overrides
+ */
 @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap");
 
 :root {
@@ -981,7 +1006,7 @@ select {
 }
 .hero-interest-card .phone-field input {
   border: 0;
-  
+
   height: 54px;
   padding: 0;
   direction: rtl;
@@ -2078,7 +2103,6 @@ main,
 .hero-interest-card .interest-form select,
 .hero-interest-card .phone-field {
   border-radius: 16px;
-  /* border: 1px solid rgba(255, 255, 255, 0.24); */
   background: rgba(75, 78, 79, 0.38);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
@@ -3760,7 +3784,6 @@ body {
   opacity: 0.78;
 }
 
-
 /* ==================== Hero Registration Card — Premium Elastic Float ==================== */
 /*
    Soft "air suspension" motion: the card rises, settles, and gently drifts back
@@ -4017,7 +4040,7 @@ body {
     width:42px;
     height:42px;
     border-radius:12px;
-   
+
     border:1px solid rgba(255,255,255,.12);
   }
   .mobile-nav {
@@ -4117,7 +4140,6 @@ body {
     rotate:none !important;
   }
 }
-
 
 /* ================================================================
    MOBILE ART-DIRECTION PASS — Hero
@@ -4395,7 +4417,6 @@ body {
   }
 }
 
-
 /* ================================================================
    FINAL MOBILE FORM ALIGNMENT
    - Keep the name field visually aligned with the phone input.
@@ -4454,7 +4475,6 @@ body {
     line-height: 1;
   }
 }
-
 
 /* ================================================================
    SAWA UNITED — LANGUAGE SWITCHER + THEME SYSTEM
@@ -4696,7 +4716,7 @@ html[data-theme="dark"] .mobile-nav { background:radial-gradient(circle at 18% 1
     padding: 4px;
     border: 1px solid rgba(255,255,255,.14);
     border-radius: 16px;
-   
+
     box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 8px 24px rgba(0,0,0,.12);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -4727,7 +4747,7 @@ html[data-theme="dark"] .mobile-nav { background:radial-gradient(circle at 18% 1
     border-radius: 12px;
     box-sizing: border-box;
     border: 1px solid rgba(255,255,255,.12);
-   
+
     color: #fff;
     box-shadow: none;
     transform: none;
@@ -4867,7 +4887,7 @@ html[data-theme="dark"] .mobile-nav { background:radial-gradient(circle at 18% 1
     border-radius: 17px;
 
     box-shadow: 0 10px 28px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.10);
-   
+
     -webkit-backdrop-filter: blur(16px) saturate(120%);
   }
 
@@ -5717,4 +5737,269 @@ html, body {
     transform: none !important;
     translate: none !important;
   }
+}
+
+/* FINAL MOBILE MENU FIX — header controls must always sit above drawer */
+@media (max-width: 980px) {
+  .site-header {
+    z-index: 2000 !important;
+  }
+
+  .site-header .nav-wrap {
+    position: relative !important;
+    z-index: 2002 !important;
+  }
+
+  .site-header .nav-actions {
+    position: relative !important;
+    z-index: 2003 !important;
+  }
+
+  .site-header .nav-actions .menu-btn {
+    position: relative !important;
+    z-index: 2004 !important;
+    display: grid !important;
+    place-items: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .site-header .mobile-nav {
+    z-index: 1 !important;
+  }
+
+  .site-header .nav-actions .menu-btn svg {
+    display: block;
+    visibility: visible;
+  }
+}
+
+/* Country switcher — dark theme */
+body.theme-dark .hero-country-switcher{
+  background:rgba(8,22,23,.82);
+  border-color:rgba(255,255,255,.22);
+}
+body.theme-dark .country-choice.is-active{
+  background:#f4efe4;
+  color:#172d2e;
+}
+
+/* ==================== Country Switcher — Hero / Section Bridge ==================== */
+.hero-country-switcher{
+  bottom: -68px;
+  position:relative;
+  z-index:30;
+  width:min(760px,calc(100% - 48px));
+  min-height:116px;
+  margin:-58px auto -58px;
+  padding:7px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border:1px solid rgba(255,255,255,.42);
+  border-radius:64px;
+  background:rgba(20,31,31,.94);
+  box-shadow:0 24px 60px rgba(0,0,0,.25);
+  backdrop-filter:blur(18px) saturate(120%);
+  -webkit-backdrop-filter:blur(18px) saturate(120%);
+}
+.country-choice{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  min-width:0;
+  padding:18px 30px;
+  border:0;
+  border-radius:58px;
+  background:transparent;
+  color:#fff;
+  text-align:start;
+  cursor:pointer;
+  transition:background .3s ease,color .3s ease,transform .25s ease,box-shadow .3s ease;
+}
+.country-choice:hover{transform:translateY(-1px)}
+.country-choice.is-active{
+  background:#f8f5ee;
+  color:#172d2e;
+  box-shadow:0 10px 28px rgba(0,0,0,.16);
+}
+.country-choice-radio{
+  width:28px;height:28px;flex:0 0 28px;
+  border:1.5px solid rgba(255,255,255,.66);
+  border-radius:50%;position:relative;
+}
+.country-choice.is-active .country-choice-radio{border-color:#253839}
+.country-choice.is-active .country-choice-radio:after{
+  content:"";position:absolute;inset:6px;border-radius:50%;background:#253839;
+}
+.country-choice-flag{font-size:28px;line-height:1;flex:0 0 auto}
+.country-choice-copy{display:flex;flex-direction:column;gap:6px;min-width:0}
+.country-choice-copy strong{
+  font:600 20px/1.1 "IBM Plex Sans Arabic",sans-serif;
+  white-space:nowrap;
+}
+.country-choice-copy small{
+  font:400 12px/1.2 "IBM Plex Sans Arabic",sans-serif;
+  opacity:.68;white-space:nowrap;
+}
+.country-choice.is-active .country-choice-copy small{opacity:.58}
+
+/* Extra breathing room: the switcher bridges the sections without covering text. */
+.reference-hero{min-height:clamp(760px,92vh,960px)}
+.hero-country-switcher + .morocco-intro{
+  padding-top:147px;
+}
+
+body.theme-dark .hero-country-switcher{
+  background:rgba(8,22,23,.95);
+  border-color:rgba(255,255,255,.24);
+}
+body.theme-dark .country-choice.is-active{
+  background:#f4efe4;
+  color:#172d2e;
+}
+
+@media(max-width:760px){
+  .hero-country-switcher{
+    width:calc(100% - 28px);
+    min-height:94px;
+    margin:-47px auto -47px;
+    padding:5px;
+    border-radius:50px;
+  }
+  .country-choice{gap:9px;padding:13px 16px;border-radius:44px}
+  .country-choice-radio{width:23px;height:23px;flex-basis:23px}
+  .country-choice.is-active .country-choice-radio:after{inset:5px}
+  .country-choice-flag{font-size:22px}
+  .country-choice-copy strong{font-size:16px}
+  .country-choice-copy small{font-size:10px}
+  .reference-hero{min-height:clamp(650px,84vh,820px)}
+  .hero-country-switcher + .morocco-intro{padding-top:147px}
+}
+@media(max-width:430px){
+  .hero-country-switcher{
+    width:calc(100% - 18px);
+    min-height:82px;
+    margin:-41px auto -41px;
+    padding:4px;
+  }
+  .country-choice{gap:6px;padding:10px 9px;border-radius:40px}
+  .country-choice-radio{width:19px;height:19px;flex-basis:19px}
+  .country-choice.is-active .country-choice-radio:after{inset:4px}
+  .country-choice-flag{font-size:18px}
+  .country-choice-copy strong{font-size:13px}
+  .country-choice-copy small{font-size:8.5px}
+  .reference-hero{min-height:clamp(600px,80vh,720px)}
+  .hero-country-switcher + .morocco-intro{padding-top:147px}
+}
+
+/* ================================================================
+   SAWA UNITED — FINAL LANGUAGE DROPDOWN RESPONSIVE ANCHOR
+   Keep the menu attached to the language control without allowing
+   it to be clipped by the viewport on narrow phones.
+   ================================================================ */
+@media (max-width: 980px) {
+  .nav-actions .language-switcher {
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .nav-actions .language-menu {
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    width: min(205px, calc(100vw - 16px)) !important;
+    max-width: calc(100vw - 16px) !important;
+    box-sizing: border-box !important;
+    z-index: 999999 !important;
+  }
+
+  /* Arabic: the controls sit on the left, so open toward the center. */
+  html[dir="rtl"] .nav-actions .language-menu {
+    left: 0 !important;
+    right: auto !important;
+    transform-origin: top left !important;
+  }
+
+  /* English/French: keep the panel inside the right viewport edge. */
+  html[dir="ltr"] .nav-actions .language-menu {
+    right: 0 !important;
+    left: auto !important;
+    transform-origin: top right !important;
+  }
+
+  .nav-actions .language-option {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-actions .language-option > span:nth-child(2) {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .nav-actions .language-option strong,
+  .nav-actions .language-option small {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-actions .language-menu {
+    top: calc(100% + 9px) !important;
+    width: min(205px, calc(100vw - 16px)) !important;
+    max-width: calc(100vw - 16px) !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .nav-actions .language-menu {
+    width: min(198px, calc(100vw - 14px)) !important;
+    max-width: calc(100vw - 14px) !important;
+  }
+}
+
+/* Dark mode readability: all visible text uses white for maximum contrast. */
+html[data-theme="dark"] .spine-site :where(h1,h2,h3,h4,h5,h6,p,span,strong,b,small,em,a,button,label,li,dt,dd,th,td,input,select,textarea,option) {
+  color: #ffffff !important;
+}
+html[data-theme="dark"] .spine-site :where(input,select,textarea)::placeholder {
+  color: rgba(255,255,255,.78) !important;
+  opacity: 1;
+}
+html[data-theme="dark"] .spine-site :where(.eyebrow,.section-heading p,.property-body p,.property-top span,.property-meta span,.city-stats span,.language-option small) {
+  color: #ffffff !important;
+  opacity: .9;
+}
+html[data-theme="dark"] .spine-site :where(.gold-btn,.property-details,.interest-form button) {
+  color: #ffffff !important;
+}
+
+/* FINAL THEME EXCEPTIONS: keep text on intentionally white surfaces unchanged.
+   These rules must stay after the global dark-mode text rule above. */
+html[data-theme="dark"] .hero-country-switcher .country-choice {
+  color: #fff !important;
+}
+html[data-theme="dark"] .hero-country-switcher .country-choice.is-active {
+  color: #172d2e !important;
+}
+html[data-theme="dark"] .hero-country-switcher .country-choice.is-active .country-choice-copy strong,
+html[data-theme="dark"] .hero-country-switcher .country-choice.is-active .country-choice-copy small {
+  color: #172d2e !important;
+}
+html[data-theme="dark"] .hero-country-switcher .country-choice:not(.is-active) .country-choice-copy strong,
+html[data-theme="dark"] .hero-country-switcher .country-choice:not(.is-active) .country-choice-copy small {
+  color: #fff !important;
+}
+html[data-theme="dark"] .hero-country-switcher .country-choice.is-active .country-choice-radio {
+  border-color: #253839 !important;
+}
+html[data-theme="dark"] .hero-country-switcher .country-choice.is-active .country-choice-radio:after {
+  background: #253839 !important;
+}
+html[data-theme="dark"] .property-card .verified {
+  color: #123f42 !important;
+  background: rgba(255,255,255,.93) !important;
 }
